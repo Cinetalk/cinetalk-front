@@ -5,12 +5,10 @@ import React, { useState } from "react";
 import Modal from "@/components/modal/modal";
 import ROUTES from "@/constants/routes";
 import useHandleClickAuthButton from "@/hooks/useHandleClickAuthButtons";
+import useScrollStore from "@/stores/useScrollStore";
 
-interface HeaderAuthButtonsProps {
-  hasScrolledPast: boolean;
-}
-
-function HeaderAuthButtons({ hasScrolledPast }: HeaderAuthButtonsProps) {
+function HeaderAuthButtons() {
+  const hasScrolledPast = useScrollStore((state) => state.hasScrolledPast);
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 

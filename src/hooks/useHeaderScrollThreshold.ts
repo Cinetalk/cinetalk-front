@@ -2,12 +2,15 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import ROUTES from "@/constants/routes";
+import useScrollStore from "@/stores/useScrollStore";
 
 import useDevice from "./useDevice";
 
 export default function useHeaderScrollThreshold() {
   const pathname = usePathname();
-  const [hasScrolledPast, setHasScrolledPast] = useState(false);
+  const setHasScrolledPast = useScrollStore(
+    (state) => state.setHasScrolledPast,
+  );
   const { device } = useDevice();
 
   const breakPointsMap: { [key: string]: number } = {
@@ -30,7 +33,7 @@ export default function useHeaderScrollThreshold() {
       const position = window.scrollY;
       if (position > breakPoints) {
         setHasScrolledPast(true);
-      } else if (position < breakPoints && hasScrolledPast) {
+      } else if (position < breakPoints) {
         setHasScrolledPast(false);
       }
     };
@@ -40,13 +43,11 @@ export default function useHeaderScrollThreshold() {
     return () => {
       removeEventListener("scroll", handleScroll);
     };
-  }, [breakPoints, hasScrolledPast, pathname]);
+  }, [breakPoints, pathname, setHasScrolledPast]);
 
   useEffect(() => {
     if (pathname.includes(ROUTES.DETAIL)) {
       setHasScrolledPast(false);
     }
   }, [pathname, setHasScrolledPast]);
-
-  return { hasScrolledPast, setHasScrolledPast };
 }

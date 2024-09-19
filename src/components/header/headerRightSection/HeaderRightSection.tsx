@@ -10,10 +10,7 @@ import React, {
 import ROUTES from "@/constants/routes";
 import useIsInputFocused from "@/hooks/useIsInputFocused";
 import useSearchMovies from "@/hooks/useSearchMovies";
-import useLoggedInStore from "@/stores/useLoggedIn";
 
-import HeaderAuthButtons from "./HeaderAuthButtons";
-import HeaderAuthedUserSection from "./HeaderAuthedUserSection";
 import HeaderSearchInputSection from "./HeaderSearchInputSection";
 import MobileHeaderRightSection from "./mobileHeaderRightSection/MobileHeaderRightSection";
 
@@ -30,7 +27,6 @@ export default function HeaderRightSection({
   children,
   setClickSearchIcon,
 }: HeaderRightSectionProps) {
-  const { loggedIn } = useLoggedInStore();
   const pathname = usePathname();
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef<HTMLInputElement | null>(null);

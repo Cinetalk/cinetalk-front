@@ -7,6 +7,7 @@ import { Suspense, useEffect, useState } from "react";
 import ROUTES from "@/constants/routes";
 import useHeaderScrollThreshold from "@/hooks/useHeaderScrollThreshold";
 import useRefresh from "@/hooks/useRefresh";
+import useScrollStore from "@/stores/useScrollStore";
 import getMyPageHeaderText from "@/utils/getMyPageHeaderText";
 
 import { ChevronLeftMd } from "../../../public/icons";
@@ -16,9 +17,10 @@ import Logo from "./Logo";
 export default function Header({ children }: { children: React.ReactNode }) {
   const [clickSearchIcon, setClickSearchIcon] = useState(false);
   const pathname = usePathname();
-  const { hasScrolledPast } = useHeaderScrollThreshold();
   const router = useRouter();
   useRefresh();
+  useHeaderScrollThreshold();
+  const hasScrolledPast = useScrollStore((state) => state.hasScrolledPast);
 
   useEffect(() => {
     const handleResize = () => {

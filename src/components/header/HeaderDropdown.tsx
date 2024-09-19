@@ -5,16 +5,16 @@ import React from "react";
 import Dropdown from "@/components/dropdown/dropdown";
 import ROUTES from "@/constants/routes";
 import useLoggedInStore from "@/stores/useLoggedIn";
+import useScrollStore from "@/stores/useScrollStore";
 
 import { CaretDownMd, LogOut, User } from "../../../public/icons";
 
 export default function HeaderDropdown({
   children,
-  hasScrolledPast,
 }: {
   children: React.ReactNode;
-  hasScrolledPast: boolean;
 }) {
+  const hasScrolledPast = useScrollStore((state) => state.hasScrolledPast);
   const dropdownMenu = [
     { icon: User, content: "마이 페이지" },
     { icon: LogOut, content: "로그 아웃" },
