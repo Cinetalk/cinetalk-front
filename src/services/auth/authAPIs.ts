@@ -5,7 +5,6 @@ import { tokenManager } from "./tokenManager";
 export const authAPIS = {
   authBy: async (authToken: string) => {
     const res = await fetch(`${API_URL}/AuthBy?authToken=${authToken}`);
-
     const data = await res.json();
     return { data, res };
   },
@@ -18,7 +17,6 @@ export const authAPIS = {
         "Content-Type": "application/json",
       },
     });
-
     const data = res.json();
     return { res, data };
   },

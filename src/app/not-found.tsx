@@ -4,7 +4,7 @@ import Link from "next/link";
 import Button from "@/components/buttons/Button";
 import ROUTES from "@/constants/routes";
 
-const movieLines = [
+export const movieLines = [
   {
     line: {
       eng: "“We’ll find a way, we always have”",
