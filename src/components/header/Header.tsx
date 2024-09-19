@@ -13,7 +13,7 @@ import { ChevronLeftMd } from "../../../public/icons";
 import HeaderRightSection from "./headerRightSection/HeaderRightSection";
 import Logo from "./Logo";
 
-export default function Header() {
+export default function Header({ children }: { children: React.ReactNode }) {
   const [clickSearchIcon, setClickSearchIcon] = useState(false);
   const pathname = usePathname();
   const { hasScrolledPast } = useHeaderScrollThreshold();
@@ -61,12 +61,11 @@ export default function Header() {
         )}
 
         <Logo />
-
-        <Suspense>
-          <HeaderRightSection
-            {...{ hasScrolledPast, clickSearchIcon, setClickSearchIcon }}
-          />
-        </Suspense>
+        <HeaderRightSection
+          {...{ hasScrolledPast, clickSearchIcon, setClickSearchIcon }}
+        >
+          {children}
+        </HeaderRightSection>
       </div>
     </header>
   );

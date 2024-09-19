@@ -21,11 +21,13 @@ interface HeaderRightSectionProps {
   hasScrolledPast: boolean;
   clickSearchIcon: boolean;
   setClickSearchIcon: Dispatch<SetStateAction<boolean>>;
+  children: React.ReactNode;
 }
 
 export default function HeaderRightSection({
   hasScrolledPast,
   clickSearchIcon,
+  children,
   setClickSearchIcon,
 }: HeaderRightSectionProps) {
   const { loggedIn } = useLoggedInStore();
@@ -76,11 +78,7 @@ export default function HeaderRightSection({
         }}
       />
 
-      {loggedIn ? (
-        <HeaderAuthedUserSection hasScrolledPast={hasScrolledPast} />
-      ) : (
-        <HeaderAuthButtons hasScrolledPast={hasScrolledPast} />
-      )}
+      {children}
     </section>
   );
 }
