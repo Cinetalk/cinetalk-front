@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 
+import { setAccessToken } from "@/services/auth/actions";
 import { authAPIS } from "@/services/auth/authAPIs";
 import { tokenManager } from "@/services/auth/tokenManager";
 import useLoggedInStore from "@/stores/useLoggedIn";
@@ -14,6 +15,7 @@ export default function useRefresh() {
         const { res } = await authAPIS.refresh();
         const accessToken = res.headers.get("access");
         if (accessToken) {
+          await setAccessToken(accessToken);
           tokenManager.setToken(accessToken);
         }
       }
