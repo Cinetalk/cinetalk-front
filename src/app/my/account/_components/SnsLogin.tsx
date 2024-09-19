@@ -1,22 +1,29 @@
-"use client";
 import Image from "next/image";
 
-import Button from "@/components/buttons/Button";
+import { LogoutButton } from "@/app/my/_components/buttons";
+import { myAPIs } from "@/services/my/myAPIs";
 
-import { Naver } from "../../../../../public/icons";
+import { Kakao, Naver } from "../../../../../public/icons";
 
-export default function SnsLogin() {
+export default async function SnsLogin() {
+  const user = await myAPIs.getUser();
+  const oauthProvider = user?.provider === "kakao" ? "kakao" : "naver";
   return (
     <div className="flex items-center gap-3 rounded-xl bg-D1_Gray px-4 py-2 Text-s-Medium Tablet:px-8 Tablet:py-4 Tablet:Text-m-Medium">
       <div className="flex flex-1 items-center gap-4">
-        <div className="my-1 flex h-10 w-10 items-center justify-center rounded-lg bg-Naver Tablet:my-0">
-          <Image alt="네이버" src={Naver} />
+        <div
+          className={`my-1 flex h-8 w-8 items-center justify-center rounded-lg Tablet:my-0 Tablet:h-10 Tablet:w-10 ${oauthProvider === "kakao" ? "bg-Kakako" : "bg-Naver"}`}
+        >
+          <Image
+            alt={oauthProvider}
+            src={oauthProvider === "kakao" ? Kakao : Naver}
+          />
         </div>
-        <span className="">네이버 계정 연동 중</span>
+        <span className="">
+          {oauthProvider === "kakao" ? "카카오" : "네이버"} 계정 연동 중
+        </span>
       </div>
-      <Button variant={"text"} onClick={() => console.log("sdf")}>
-        로그아웃
-      </Button>
+      <LogoutButton />
     </div>
   );
 }
