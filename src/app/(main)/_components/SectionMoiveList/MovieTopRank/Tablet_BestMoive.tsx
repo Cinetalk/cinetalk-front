@@ -11,9 +11,7 @@ import {
   StarFillMd,
   TmdbSm,
 } from "@/../public/icons";
-import Button from "@/components/buttons/Button";
 
-import useMovieSwiper from "../../../_hooks/useMovieSwiper";
 import PostCard from "../../PostCard";
 import Tablet_BestTalkPost from "./Post/Tablet_BestTalkPost";
 interface Tablet_BestMoiveProps {

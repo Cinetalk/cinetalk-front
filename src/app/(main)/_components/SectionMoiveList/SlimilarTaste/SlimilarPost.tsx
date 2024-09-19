@@ -66,7 +66,7 @@ export default function SlimilarPost({
         <h1 className="Text-xl-Bold">닉네임님의 최근 톡</h1>
         <div className="flex gap-[24px]">
           <Swiper
-            slidesPerView={6}
+            slidesPerView="auto"
             spaceBetween={20}
             className="flex  rounded-xl px-[12px]  py-[24px]"
           >
@@ -76,7 +76,7 @@ export default function SlimilarPost({
               ? ReviewUsers[PickUserNumber].reviews.map(
                   (_: PostreviewDTO, index: number) => {
                     return (
-                      <SwiperSlide key={index}>
+                      <SwiperSlide key={index} className="h-[292px] w-[174px]">
                         <Link href={`detail/${_.movie_id}`}>
                           <div className="flex flex-col">
                             <PostCard

@@ -67,7 +67,7 @@ export default function MasterPieceMoive() {
 
       <div className="hidden Laptop:flex">
         <Swiper
-          slidesPerView={6}
+          slidesPerView="auto"
           spaceBetween={24}
           className="gap-5  Laptop:gap-5 Desktop:gap-6"
           modules={[Pagination]}

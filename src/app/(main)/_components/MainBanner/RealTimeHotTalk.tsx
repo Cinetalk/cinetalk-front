@@ -24,44 +24,34 @@ interface ReviewListType {
 }
 
 export default function RealTimeHotTalk({ ReviewList }: ReviewListType) {
-  let arr = ["1", "1", "1", "1", "1"];
-  {
-    /*
-  1. 임시로 모바일 텍스트
-  2. 나중에 테블릿 ,렙탑, 데탑 사즈로
-*/
-  }
   return (
-    <div className="flex  flex-col justify-end gap-[20px]  text-white">
+    <div className="flex  flex-col gap-[20px]  text-white Tablet:justify-end">
       <h1 className=" hidden Laptop:block Laptop:Text-xl-Bold  Desktop:w-[521px]  ">
         실시간 핫한 톡
       </h1>
 
       <ul className="flex flex-col Tablet:gap-3 Laptop:hidden ">
-        {Array(3)
-          .fill(0)
-          .map((_, index) => {
-            return (
-              <li
-                key={index}
-                className="items- center   flex justify-between gap-2 Text-s-Regular"
-              >
-                <div className="flex items-center justify-center">
-                  <Image src={StarFillSm} alt="star" className="h-4 w-4" />
-                  <span className="Text-xs-Regular">
-                    {/* {ReviewList[index].star} */}
-                  </span>
-                </div>
-                <span className="line-clamp-1 w-48 flex-1 truncate Text-m-Medium">
-                  {/* {ReviewList[index].content} */}
-                </span>
+        {ReviewList.map((Review, index) => {
+          if (index > 2) return null;
+          return (
+            <li
+              key={index}
+              className={`items- center flex  justify-between gap-2 Text-s-Regular`}
+            >
+              <div className="flex items-center justify-center">
+                <Image src={StarFillSm} alt="star" className="h-4 w-4" />
+                <span className="Text-xs-Regular">{Review.star}</span>
+              </div>
+              <span className="line-clamp-1 w-48 flex-1 truncate Text-m-Medium">
+                {Review.content}
+              </span>
 
-                <span className=" flex  items-center opacity-40">
-                  {/* {dayjs(ReviewList[index].createdAt).fromNow()} */}
-                </span>
-              </li>
-            );
-          })}
+              <span className=" flex  items-center opacity-40">
+                {dayjs(Review.createdAt).fromNow()}
+              </span>
+            </li>
+          );
+        })}
       </ul>
       {/* DeskTop , LabTop` */}
       <ul className="hidden flex-col Tablet:hidden Tablet:gap-3  Laptop:flex  Laptop:gap-3 Desktop:flex Desktop:gap-4">

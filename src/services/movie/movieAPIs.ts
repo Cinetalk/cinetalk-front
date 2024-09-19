@@ -34,25 +34,32 @@ export const movieAPIs = {
   },
   getWatchMovie: async () => {
     const accessToken = tokenManager.getToken();
-    const res = await fetch(`${API_URL}/movie/HoxyWatching`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        access: `${accessToken}`,
-      },
-    });
+    let res = null;
+    accessToken
+      ? (res = await fetch(`${API_URL}/movie/HoxyWatching`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            access: `${accessToken}`,
+          },
+        }))
+      : (res = await fetch(`${API_URL}/movie/HoxyWatching`));
+
     const data: WatchMovie = await res.json();
     return data;
   },
   getPeopleReviewers: async () => {
     const accessToken = tokenManager.getToken();
-    const res = await fetch(`${API_URL}/movie/top-reviewers`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        access: `${accessToken}`,
-      },
-    });
+    let res = null;
+    accessToken
+      ? (res = await fetch(`${API_URL}/movie/top-reviewers`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            access: `${accessToken}`,
+          },
+        }))
+      : (res = await fetch(`${API_URL}/movie/top-reviewers`));
     const data: MovieReviewRecommed[] = await res.json();
     return data;
   },

@@ -49,8 +49,6 @@ export default function Footer() {
       <hr className="" />
       <div className="flex flex-col gap-5 text-Gray">
         <div className="flex flex-col items-center gap-3 Laptop:flex-row Laptop:gap-8">
-          <span className="Text-xs-Bold">버터구이오징어</span>
-          <div className="border-r-[1px] bg-Gray" />
           <div className="flex items-center  gap-4 Text-xs-Regular">
             <span>문의</span>
             <a
@@ -62,7 +60,29 @@ export default function Footer() {
             </a>
           </div>
         </div>
-        <span className="Text-xs-Regular">
+        <div className="flex gap-3">
+          <span className="Text-s-Bold">버터구이오징어</span>
+          <div className="border-r-[1px] border-Gray" />
+          <span className="Text-s-Bold">Front-End</span>
+          <div className="flex gap-3 Text-s-Medium">
+            <span>김범수</span>
+            <span>이상원</span>
+            <span>전병규</span>
+          </div>
+          <div className="border-r-[1px] border-Gray" />
+          <span className="Text-s-Bold">Back-End</span>
+          <div className="flex gap-3 Text-s-Medium">
+            <span>깁태욱</span>
+            <span>정동훈</span>
+          </div>
+
+          <div className="border-r-[1px] border-Gray" />
+          <span className="Text-s-Bold">UXUI</span>
+          <div className="flex gap-3 Text-s-Medium">
+            <span>깁호산나</span>
+          </div>
+        </div>
+        <span className="Text-s-Medium">
           Copyright ⓒ 2024 cinetalk. All rights reserved
         </span>
       </div>

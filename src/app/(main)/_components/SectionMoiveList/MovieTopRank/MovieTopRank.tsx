@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { ChevronDown } from "@/../public/icons";
 import Button from "@/components/buttons/Button";
 import Dropdown from "@/components/dropdown/dropdown";
+import LoadingSpinner from "@/components/loadingSpinner/LoadingSpinner";
 import { movieAPIs } from "@/services/movie/movieAPIs";
 
 import DeskTop_BestMovie from "./DeskTop_BestMoive";
@@ -43,6 +44,7 @@ export default function MoiveTopRank() {
   const [MovieTopTenData, setMovieTopTenData] = useState<Movie_TopTen | null>(
     null,
   );
+
   // const MovieMasterPiece: MovieHidingPiece = await movieAPIs.getHidingPiece();
   useEffect(() => {
     const fetchMovie = async () => {
@@ -81,11 +83,19 @@ export default function MoiveTopRank() {
           </Dropdown>
         </div>
       </div>
-      {/* 모바일 */}
-      <Tablet_BestMoive MovieData={MovieTopTenData} />
-      <DeskTop_BestMovie MovieData={MovieTopTenData} />
-      <Laptop_BestMovie MovieData={MovieTopTenData} />
-      <Mobile_BestMovie MovieData={MovieTopTenData} />
+      {!MovieTopTenData ? (
+        <div className="flex items-center justify-center px-5 py-5">
+          <LoadingSpinner size="2xl" color="primary" />
+        </div>
+      ) : (
+        <div>
+          {/* 모바일 */}
+          <Tablet_BestMoive MovieData={MovieTopTenData} />
+          <DeskTop_BestMovie MovieData={MovieTopTenData} />
+          <Laptop_BestMovie MovieData={MovieTopTenData} />
+          <Mobile_BestMovie MovieData={MovieTopTenData} />
+        </div>
+      )}
     </div>
   );
 }
