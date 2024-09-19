@@ -7,7 +7,6 @@ import SignUp from "./_components/SignUp";
 
 export default function WithoutNickNameRedirect() {
   const { isLoading, userInfo } = useLogin("without-nickname");
-
   return (
     <div>
       {isLoading ? (

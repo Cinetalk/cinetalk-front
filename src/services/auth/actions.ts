@@ -2,14 +2,16 @@
 
 import { cookies } from "next/headers";
 
-export const setAccessToken = async (token: string) => {
-  cookies().set("accessToken", token, {
+import { tokenKey } from "@/constants/token";
+
+export const setAccessToken = (token: string) => {
+  cookies().set(tokenKey, token, {
     httpOnly: true,
-    sameSite: "strict",
     secure: true,
     maxAge: 60 * 9 + 10,
   });
-  const a = cookies().get("accessToken");
-  console.log(a);
-  console.log("refresh token wkrehd");
+};
+
+export const deleteAccessToken = () => {
+  cookies().delete(tokenKey);
 };

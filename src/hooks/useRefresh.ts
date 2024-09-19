@@ -6,7 +6,7 @@ import { tokenManager } from "@/services/auth/tokenManager";
 import useLoggedInStore from "@/stores/useLoggedIn";
 
 export default function useRefresh() {
-  const NINE_MINUTES = 60 * 9 * 1000;
+  const NINE_MINUTES = 60 * 1000;
   const { loggedIn } = useLoggedInStore();
 
   useEffect(() => {
@@ -15,13 +15,12 @@ export default function useRefresh() {
         const { res } = await authAPIS.refresh();
         const accessToken = res.headers.get("access");
         if (accessToken) {
-          await setAccessToken(accessToken);
           tokenManager.setToken(accessToken);
+          setAccessToken(accessToken);
         }
       }
     };
 
-    refresh();
     const interval = setInterval(() => {
       refresh();
     }, NINE_MINUTES);

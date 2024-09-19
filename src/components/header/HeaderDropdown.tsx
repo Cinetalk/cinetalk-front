@@ -4,6 +4,7 @@ import React from "react";
 
 import Dropdown from "@/components/dropdown/dropdown";
 import ROUTES from "@/constants/routes";
+import { deleteAccessToken } from "@/services/auth/actions";
 import useLoggedInStore from "@/stores/useLoggedIn";
 import useScrollStore from "@/stores/useScrollStore";
 
@@ -27,13 +28,15 @@ export default function HeaderDropdown({
     if (i === 0) router.push(ROUTES.MY.default);
     else if (i === 1) {
       logout();
+      deleteAccessToken();
     }
   };
 
   return (
     <Dropdown type="icon">
       <Dropdown.Trigger>
-        <div className="flex">
+        <div className="flex items-center">
+          <div className="mr-3 h-[30px] w-[30px] rounded-full bg-[#d9d9d9]" />
           <p
             className={`mr-2 text-regular font-Medium ${pathname.includes(ROUTES.DETAIL) ? (hasScrolledPast ? "text-Silver" : "text-[rgba(255,255,255,0.6)]") : "text-Silver"}`}
           >
@@ -45,7 +48,7 @@ export default function HeaderDropdown({
       <Dropdown.List>
         {dropdownMenu.map((m, i) => (
           <Dropdown.Item
-            key={i}
+            key={m.content}
             onClick={() => handleClickDropdown(i)}
             isFocused={m.content === "전체"}
           >
