@@ -6,7 +6,7 @@ import { myAPIs } from "@/services/my/myAPIs";
 export default async function HeaderContainer() {
   const user = await myAPIs.getUser();
   return (
-    <div>
+    <>
       <Header>
         {user ? (
           <HeaderAuthedUserSection>{user.nickname}</HeaderAuthedUserSection>
@@ -14,6 +14,6 @@ export default async function HeaderContainer() {
           <HeaderAuthButtons />
         )}
       </Header>
-    </div>
+    </>
   );
 }
