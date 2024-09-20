@@ -1,3 +1,4 @@
+"use client";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { FormEvent, useState } from "react";
@@ -17,7 +18,12 @@ interface Birthday {
 let BIRTHDAY = { year: "2000", month: "11", day: "17" };
 const today = dayjs();
 const hundredYearsAgo = dayjs().subtract(100, "year");
-export default function BirthdayForm() {
+
+interface BirthdayFormProps {
+  birthday: string;
+}
+
+export default function BirthdayForm({}: BirthdayFormProps) {
   const { isMobile } = useDevice();
   const [isEditingBirthday, setIsEditingBirthday] = useState(false);
   const [birthday, setBirthday] = useState<Birthday>(BIRTHDAY);

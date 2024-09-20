@@ -1,29 +1,47 @@
+"use client";
 import { useState } from "react";
 
 import { AccountFormLabel } from "@/app/my/_components/Labels";
 import Button from "@/components/buttons/Button";
 import useDevice from "@/hooks/useDevice";
+import { changeGender } from "@/services/my/actions";
 
-type Gender = "남자" | "여자" | "기타";
+type GenderKor = "남자" | "여자" | "기타";
+type Gender = MyInfo["gender"];
 
-const GENDERS: Gender[] = ["남자", "여자", "기타"];
+const genderEng: Gender[] = ["M", "F", "E"];
+const genderKor: GenderKor[] = ["남자", "여자", "기타"];
 
-export default function GenderForm() {
+interface GenderFormProps {
+  gender: Gender;
+}
+
+export default function GenderForm({ gender }: GenderFormProps) {
   const { isMobile } = useDevice();
-  const [isEditingGender, setIsEditingGender] = useState(false);
-  const [gender, setGender] = useState<Gender>("남자");
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedGender, setSelectedGender] = useState(gender);
+  const selectedGenderIndex = genderEng.findIndex((g) => g === selectedGender);
+  const [loading, setLoading] = useState(false);
 
+  const handleSubmit = async () => {
+    if (!isEditing) return setIsEditing(true);
+    setLoading(true);
+    const result = await changeGender(selectedGender);
+    if (!result) setSelectedGender(gender);
+    setLoading(false);
+    setIsEditing(false);
+  };
   return (
     <div className="flex items-center">
       <div className="flex flex-1 items-center gap-5 Tablet:gap-1">
         <AccountFormLabel>성별</AccountFormLabel>
-        {isEditingGender ? (
+        {isEditing ? (
           <div className="flex gap-2 Tablet:gap-3">
-            {GENDERS.map((g) => (
+            {genderKor.map((g, i) => (
               <Button
-                onClick={() => setGender(g)}
+                onClick={() => setSelectedGender(genderEng[i])}
                 className="px-3 py-[6px] Text-s-Medium Tablet:px-4 Tablet:py-2 Tablet:Text-m-Medium"
-                focus={gender === g ? "1" : "none"}
+                focus={selectedGender === genderEng[i] ? "1" : "none"}
                 key={g}
                 variant={"line"}
                 size={"sm"}
@@ -34,16 +52,17 @@ export default function GenderForm() {
             ))}
           </div>
         ) : (
-          <span className="">{gender}</span>
+          <span>{genderKor[selectedGenderIndex]}</span>
         )}
       </div>
       <Button
-        size={!isMobile && isEditingGender ? "md" : "none"}
-        focus={isMobile && isEditingGender ? "1" : "none"}
-        variant={!isMobile && isEditingGender ? "orange" : "text"}
-        onClick={() => setIsEditingGender((prev) => !prev)}
+        disabled={loading}
+        size={!isMobile && isEditing ? "md" : "none"}
+        focus={isMobile && isEditing ? "1" : "none"}
+        variant={!isMobile && isEditing ? "orange" : "text"}
+        onClick={handleSubmit}
       >
-        {isEditingGender ? "완료" : "변경"}
+        {isEditing ? "완료" : "변경"}
       </Button>
     </div>
   );
