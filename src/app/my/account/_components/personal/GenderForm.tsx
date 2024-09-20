@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AccountFormLabel } from "@/app/my/_components/Labels";
 import Button from "@/components/buttons/Button";
 import useDevice from "@/hooks/useDevice";
-import { changeGender } from "@/services/my/actions";
+import { changeUserInfo } from "@/services/my/actions";
 
 type GenderKor = "남자" | "여자" | "기타";
 type Gender = MyInfo["gender"];
@@ -26,7 +26,7 @@ export default function GenderForm({ gender }: GenderFormProps) {
   const handleSubmit = async () => {
     if (!isEditing) return setIsEditing(true);
     setLoading(true);
-    const result = await changeGender(selectedGender);
+    const result = await changeUserInfo(selectedGender, "gender");
     if (!result) setSelectedGender(gender);
     setLoading(false);
     setIsEditing(false);

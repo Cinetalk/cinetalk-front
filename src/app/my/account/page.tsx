@@ -22,7 +22,7 @@ export default async function Page() {
       </div>
       <div className="flex flex-col gap-3 Tablet:gap-5">
         <AccountFormTitle>개인 정보</AccountFormTitle>
-        <Personal gender={user.gender} />
+        <Personal birthday={user.birthday} gender={user.gender} />
       </div>
       <div className="flex flex-col items-start text-Gray Text-s-Medium Tablet:Text-m-Medium">
         <button type="button" className="py-2 text-Gray_Orange hover:underline">

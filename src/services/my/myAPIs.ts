@@ -13,7 +13,6 @@ export const myAPIs = {
         access: accessToken,
       },
     });
-    console.log("sdfdsfdsfsd");
     const data = await res.json();
     return data;
   },

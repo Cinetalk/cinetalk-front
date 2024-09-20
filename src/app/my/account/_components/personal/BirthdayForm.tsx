@@ -1,4 +1,5 @@
 "use client";
+
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { FormEvent, useState } from "react";
@@ -6,6 +7,7 @@ import { FormEvent, useState } from "react";
 import { AccountFormLabel } from "@/app/my/_components/Labels";
 import Button from "@/components/buttons/Button";
 import useDevice from "@/hooks/useDevice";
+import { changeUserInfo } from "@/services/my/actions";
 
 dayjs.extend(customParseFormat);
 
@@ -15,7 +17,6 @@ interface Birthday {
   day: string;
 }
 
-let BIRTHDAY = { year: "2000", month: "11", day: "17" };
 const today = dayjs();
 const hundredYearsAgo = dayjs().subtract(100, "year");
 
@@ -23,44 +24,48 @@ interface BirthdayFormProps {
   birthday: string;
 }
 
-export default function BirthdayForm({}: BirthdayFormProps) {
+export default function BirthdayForm({ birthday }: BirthdayFormProps) {
+  const [year, month, day] = birthday.split("-");
   const { isMobile } = useDevice();
-  const [isEditingBirthday, setIsEditingBirthday] = useState(false);
-  const [birthday, setBirthday] = useState<Birthday>(BIRTHDAY);
-  const [birthdayError, setBirthdayError] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [newBirthday, setNewBirthday] = useState<Birthday>({
+    day,
+    month,
+    year,
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
-  const handleBirthdaySubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleBirthdaySubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (birthdayError) {
-      setBirthday(BIRTHDAY);
-      setBirthdayError(false);
-    } else {
-      ["month", "day"].forEach((field) =>
-        handlePadBirthday(field as keyof Birthday),
-      );
-      BIRTHDAY = birthday;
-    }
-    setIsEditingBirthday((prev) => !prev);
+    ["month", "day"].forEach((field) =>
+      handlePadBirthday(field as keyof Birthday),
+    );
+    const { year, month, day } = newBirthday;
+    setLoading(true);
+    const result = await changeUserInfo(`${year}-${month}-${day}`, "birthday");
+    setLoading(false);
+    if (result.state) return setIsEditing((prev) => !prev);
   };
 
   const handlePadBirthday = (field: keyof Birthday) => {
-    if (!birthday[field].length) return;
-    setBirthday((prev) => ({
+    if (!newBirthday[field].length) return;
+    setNewBirthday((prev) => ({
       ...prev,
-      [field]: birthday[field].padStart(2, "0"),
+      [field]: newBirthday[field].padStart(2, "0"),
     }));
   };
 
   const handleBirthdayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (birthdayError) setBirthdayError(false);
+    if (error) setError(false);
     const { name, value } = e.target;
     const newValue = value.replace(/[^0-9.]/g, "");
-    setBirthday((prev) => ({ ...prev, [name]: newValue }));
+    setNewBirthday((prev) => ({ ...prev, [name]: newValue }));
     validateBirthday(name as keyof Birthday, newValue);
   };
 
   const validateBirthday = (name: keyof Birthday, value: string) => {
-    const userBirthday = `${name === "year" ? value : birthday.year}/${name === "month" ? value : birthday.month}/${name === "day" ? value : birthday.day}`;
+    const userBirthday = `${name === "year" ? value : newBirthday.year}/${name === "month" ? value : newBirthday.month}/${name === "day" ? value : newBirthday.day}`;
     if (
       (name === "year" && +value < hundredYearsAgo.year()) ||
       dayjs(userBirthday).isAfter(today) ||
@@ -71,7 +76,7 @@ export default function BirthdayForm({}: BirthdayFormProps) {
         true,
       ).isValid()
     ) {
-      setBirthdayError(true);
+      setError(true);
     }
   };
 
@@ -79,7 +84,7 @@ export default function BirthdayForm({}: BirthdayFormProps) {
     <form className="flex" onSubmit={handleBirthdaySubmit}>
       <div className="flex flex-1 gap-5 Tablet:gap-1">
         <AccountFormLabel>생년월일</AccountFormLabel>
-        {isEditingBirthday ? (
+        {isEditing ? (
           <div className="flex flex-col Tablet:flex-row Tablet:gap-2">
             <div className="flex h-10 items-center gap-1">
               <input
@@ -87,7 +92,7 @@ export default function BirthdayForm({}: BirthdayFormProps) {
                 type="string"
                 maxLength={4}
                 name="year"
-                value={birthday.year}
+                value={newBirthday.year}
                 onChange={handleBirthdayChange}
                 className="w-[57px] rounded-lg bg-Black px-3 py-1 text-center outline-none Text-s-Medium placeholder:text-Gray Tablet:w-[71px] Tablet:px-4 Tablet:Text-m-Medium"
               />
@@ -97,7 +102,7 @@ export default function BirthdayForm({}: BirthdayFormProps) {
                 type="string"
                 maxLength={2}
                 name="month"
-                value={birthday.month}
+                value={newBirthday.month}
                 onChange={handleBirthdayChange}
                 onBlur={() => handlePadBirthday("month")}
                 className="w-[41px] rounded-lg bg-Black px-3 py-1 text-center outline-none Text-s-Medium placeholder:text-Gray Tablet:w-[52px] Tablet:px-4 Tablet:Text-m-Medium"
@@ -108,13 +113,13 @@ export default function BirthdayForm({}: BirthdayFormProps) {
                 type="string"
                 maxLength={2}
                 name="day"
-                value={birthday.day}
+                value={newBirthday.day}
                 onChange={handleBirthdayChange}
                 onBlur={() => handlePadBirthday("day")}
                 className="w-[41px] rounded-lg bg-Black px-3 py-1 text-center outline-none Text-s-Medium placeholder:text-Gray Tablet:w-[52px] Tablet:px-4 Tablet:Text-m-Medium"
               />
             </div>
-            {birthdayError && (
+            {error && (
               <span className="flex text-Error Text-xs-Regular Tablet:items-center">
                 올바르게 입력해주세요.
               </span>
@@ -122,19 +127,18 @@ export default function BirthdayForm({}: BirthdayFormProps) {
           </div>
         ) : (
           <span className="flex h-10 items-center">
-            {birthday.year} / {birthday.month} / {birthday.day}
+            {newBirthday.year} / {newBirthday.month} / {newBirthday.day}
           </span>
         )}
       </div>
       <Button
+        disabled={loading}
         type="submit"
-        size={!isMobile && isEditingBirthday && !birthdayError ? "md" : "none"}
-        focus={isEditingBirthday && !birthdayError ? "1" : "none"}
-        variant={
-          !isMobile && isEditingBirthday && !birthdayError ? "orange" : "text"
-        }
+        size={!isMobile && isEditing && !error ? "md" : "none"}
+        focus={isEditing && !error ? "1" : "none"}
+        variant={!isMobile && isEditing && !error ? "orange" : "text"}
       >
-        {isEditingBirthday ? (birthdayError ? "취소" : "완료") : "변경"}
+        {isEditing ? (error ? "취소" : "완료") : "변경"}
       </Button>
     </form>
   );
