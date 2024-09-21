@@ -46,3 +46,36 @@ export function NicknameChangeButton({
     </Button>
   );
 }
+
+export function BookmarkMobileButtons({
+  selectedMovieIds,
+  setSelectedMovieIds,
+  onBookmarkDelete,
+  loading,
+}: {
+  loading: boolean;
+  selectedMovieIds: number[];
+  onBookmarkDelete: () => Promise<void>;
+  setSelectedMovieIds: React.Dispatch<React.SetStateAction<number[]>>;
+}) {
+  return (
+    <div className="fixed bottom-0 left-0 flex w-screen items-center border-t border-D2_Gray bg-D1_Gray py-[6px] pb-6 Text-m-Medium Tablet:hidden">
+      <button
+        type="button"
+        disabled={!selectedMovieIds.length}
+        className="flex-1 p-2 Text-m-Medium disabled:text-Gray"
+        onClick={() => setSelectedMovieIds([])}
+      >
+        선택 해제
+      </button>
+      <button
+        disabled={!selectedMovieIds.length || loading}
+        type="button"
+        onClick={onBookmarkDelete}
+        className="flex-1 p-2 text-Error Text-m-Medium disabled:text-Gray"
+      >
+        삭제
+      </button>
+    </div>
+  );
+}

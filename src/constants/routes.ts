@@ -5,7 +5,7 @@ const ROUTES = {
     default: "/my",
     activity: () => `${ROUTES.MY.default}/activity`,
     account: () => `${ROUTES.MY.default}/account`,
-    favorites: () => `${ROUTES.MY.default}/favorites`,
+    bookmark: () => `${ROUTES.MY.default}/bookmark`,
   },
   SEARCH: {
     default: "/search",

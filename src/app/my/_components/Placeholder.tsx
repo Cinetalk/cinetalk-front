@@ -2,7 +2,7 @@ import Button from "@/components/buttons/Button";
 import ROUTES from "@/constants/routes";
 
 interface Props {
-  type: "rating" | "review" | "favorites";
+  type: "rating" | "review" | "bookmark";
 }
 
 const MESSAGES = {
@@ -16,7 +16,7 @@ const MESSAGES = {
     desc: "영화에 대한 생각을 나눠보세요 :)",
     button: "톡 작성하러 가기",
   },
-  favorites: {
+  bookmark: {
     title: "찜한 영화가 없어요.",
     desc: "보고 싶은 영화를 찾아보세요 :)",
     button: "찜 하러가기",

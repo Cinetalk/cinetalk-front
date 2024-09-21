@@ -24,7 +24,7 @@ const LINKS = [
     acitveSvg: ArchivePrimary,
   },
   {
-    href: ROUTES.MY.favorites(),
+    href: ROUTES.MY.bookmark(),
     name: "찜한 작품",
     svg: Bookmark,
     acitveSvg: BookmarkPrimary,

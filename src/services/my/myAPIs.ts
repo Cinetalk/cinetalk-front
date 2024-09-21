@@ -31,4 +31,20 @@ export const myAPIs = {
     const data = await res.json();
     return data;
   },
+
+  getBookmark: async (): Promise<Bookmark[] | null> => {
+    const accessToken = cookies().get(tokenKey)?.value;
+    if (!accessToken) return null;
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/my/BookmarkByUser`,
+      {
+        headers: {
+          access: accessToken,
+        },
+      },
+    );
+    const data = await res.json();
+    return data;
+  },
 };

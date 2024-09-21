@@ -68,6 +68,23 @@ export const addBookmark = async (movieId: string) => {
     },
   );
   const data = await res.json();
-  console.log({ data });
   return data;
+};
+
+export const deleteBookmark = async (list: number[]) => {
+  const accessToken = cookies().get(tokenKey)?.value;
+  if (!accessToken) throw new Error("unauthorized error");
+  const queryString = list.map((id) => `BookmarkList=${id}`).join("&");
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/my/BookmarkDelete?${queryString}`,
+    {
+      headers: {
+        access: accessToken,
+      },
+      method: "DELETE",
+    },
+  );
+  const data = (await res.json()) as { state: boolean };
+  if (data.state) revalidatePath("/my");
+  return data.state;
 };
