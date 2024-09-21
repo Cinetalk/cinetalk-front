@@ -54,3 +54,20 @@ export const verifyNickname = async (
   const data = await res.json();
   return data;
 };
+
+export const addBookmark = async (movieId: string) => {
+  const accessToken = cookies().get(tokenKey)?.value;
+  if (!accessToken) throw new Error("unauthorized error");
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/bookmark/${movieId}`,
+    {
+      headers: {
+        access: accessToken,
+      },
+      method: "POST",
+    },
+  );
+  const data = await res.json();
+  console.log({ data });
+  return data;
+};

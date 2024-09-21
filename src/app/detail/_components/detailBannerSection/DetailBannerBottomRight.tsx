@@ -1,8 +1,10 @@
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 import useDevice from "@/hooks/useDevice";
 import useSmoothScroll from "@/hooks/useSmoothScroll";
+import { addBookmark } from "@/services/my/actions";
 
 import {
   EditPencilLineMd,
@@ -19,11 +21,12 @@ interface DetailBannerBottomRightProps {
 export default function DetailBannerBottomRight({
   movieDetailData,
 }: DetailBannerBottomRightProps) {
+  const pathname = usePathname();
   const { smoothScroll } = useSmoothScroll();
   const { activeCategoryTab, setActiveCategoryTab } = useCategoryTabStore();
   const { device } = useDevice();
   const [clickedTalk, setClickedTalk] = useState(false);
-
+  const addBookmarkWithId = addBookmark.bind(null, pathname.split("/")[2]);
   useEffect(() => {
     if (activeCategoryTab === "톡" && clickedTalk) {
       smoothScroll("my-talk");
@@ -40,7 +43,6 @@ export default function DetailBannerBottomRight({
 
     smoothScroll("my-talk");
   };
-
   return (
     <section className="absolute bottom-[-60px] flex translate-y-[100%] Tablet:bottom-[-41px] Laptop:static Laptop:translate-y-0">
       <section className="mt-auto flex items-center gap-10 Laptop:gap-5 Desktop:gap-8">
@@ -52,7 +54,11 @@ export default function DetailBannerBottomRight({
             내 평가
           </p>
         </section>
-        <section className="cursor-pointer">
+        {/* <section className="cursor-pointer"> */}
+        <button
+          onClick={() => addBookmark(pathname.split("/")[2])}
+          className="cursor-pointer"
+        >
           <Image
             src={HeartLineLg}
             alt="찜하기"
@@ -66,7 +72,7 @@ export default function DetailBannerBottomRight({
           <p className="text-center text-L_Gray Text-xs-Regular Laptop:text-White Laptop:Text-s-Medium">
             찜 하기
           </p>
-        </section>
+        </button>
         <section onClick={handleClickTalk} className="cursor-pointer">
           <Image
             src={EditPencilLineSm}
