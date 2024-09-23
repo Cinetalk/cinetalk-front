@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import Badge from "@/app/my/_components/Badge";
+import Badge from "@/app/my/_components/badge/Badge";
 import UserInfo from "@/app/my/_components/UserInfo";
 import Activity from "@/app/my/activity/Activity";
 import ROUTES from "@/constants/routes";

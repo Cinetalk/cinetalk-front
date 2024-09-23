@@ -1,103 +1,63 @@
 "use server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { z } from "zod";
 
 import { tokenKey } from "@/constants/token";
-import { myAPIs } from "@/services/my/myAPIs";
-import { nincknameRegex } from "@/utils/regex";
-
-const nicknameSchema = z.object({
-  nickname: z.string().regex(nincknameRegex),
-});
+import { CustomFetch } from "@/services/my/myAPIs";
 
 export const logout = async () => {
   cookies().delete(tokenKey);
   redirect("/");
 };
-
 export const changeUserInfo = async (
   value: string,
   type: "gender" | "nickname" | "birthday",
 ): Promise<{ state: boolean }> => {
-  const accessToken = cookies().get(tokenKey)?.value;
-  if (!accessToken) throw new Error("unauthorized error");
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/my/userInfoMerge/${type}?value=${value}`,
-    {
-      headers: {
-        access: accessToken,
-      },
-      method: "PATCH",
-    },
+  const data = await new CustomFetch().authFetch(
+    `/my/userInfoMerge/${type}?value=${value}`,
+    "PATCH",
   );
-  const data = await res.json();
   if (data.state) revalidatePath("/my");
-
   return data;
 };
-
-export const verifyNickname = async (
-  nickname: string,
-): Promise<boolean | null> => {
-  const accessToken = cookies().get(tokenKey)?.value;
-  if (!accessToken) return null;
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/my/NicknameCheck?nickname=${nickname}`,
-    {
-      headers: {
-        access: accessToken,
-      },
-    },
+export const verifyNickname = async (nickname: string): Promise<boolean> => {
+  const data = await new CustomFetch().authFetch(
+    `/my/NicknameCheck?nickname=${nickname}`,
   );
-  const data = await res.json();
   return data;
 };
-
 export const addBookmark = async (movieId: string) => {
-  const accessToken = cookies().get(tokenKey)?.value;
-  if (!accessToken) throw new Error("unauthorized error");
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/bookmark/${movieId}`,
-    {
-      headers: {
-        access: accessToken,
-      },
-      method: "POST",
-    },
+  const data = await new CustomFetch().authFetch(
+    `/bookmark/${movieId}`,
+    "POST",
   );
-  const data = await res.json();
   return data;
 };
-
 export const deleteBookmark = async (list: number[]) => {
-  const accessToken = cookies().get(tokenKey)?.value;
-  if (!accessToken) throw new Error("unauthorized error");
   const queryString = list.map((id) => `BookmarkList=${id}`).join("&");
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/my/BookmarkDelete?${queryString}`,
-    {
-      headers: {
-        access: accessToken,
-      },
-      method: "DELETE",
-    },
-  );
-  const data = (await res.json()) as { state: boolean };
+  const data = (await new CustomFetch().authFetch(
+    `/my/BookmarkDelete?${queryString}`,
+    "DELETE",
+  )) as { state: boolean };
   if (data.state) revalidatePath("/my");
   return data.state;
 };
-
 export const deleteAccount = async () => {
-  const accessToken = cookies().get(tokenKey)?.value;
-  if (!accessToken) throw new Error("unauthorized error");
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/my/UserDelete`, {
-    headers: {
-      access: accessToken,
-    },
-    method: "DELETE",
-  });
-  const data = (await res.json()) as { state: boolean };
+  const data = (await new CustomFetch().authFetch(
+    `/my/UserDelete`,
+    "DELETE",
+  )) as { state: boolean };
+  return data.state;
+};
+export const updateBadge = async (list: number[]) => {
+  const queryString = list.map((id) => `BadgeList=${id}`).join("&");
+  const data = (await new CustomFetch().authFetch(
+    queryString
+      ? `/my/BadgeUseUpdate?${queryString || ""}`
+      : `/my/BadgeUseUpdate?BadgeList`,
+    "PATCH",
+  )) as { state: boolean };
+  if (data.state) revalidateTag("badges");
   return data.state;
 };

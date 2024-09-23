@@ -11,7 +11,7 @@ import { deleteBookmark } from "@/services/my/actions";
 import { Check } from "../../../../public/icons";
 
 interface BookmarkListProps {
-  movies: Bookmark[] | null;
+  movies: Bookmark[];
 }
 
 export default function BookmarkList({ movies }: BookmarkListProps) {
@@ -53,7 +53,7 @@ export default function BookmarkList({ movies }: BookmarkListProps) {
         selectedMovieIds={selectedMovieIds}
         setSelectedMovieIds={setSelectedMovieIds}
       />
-      {movies?.length ? (
+      {movies.length ? (
         <div className="grid grid-cols-2 gap-2 Tablet:grid-cols-3 Tablet:gap-x-5 Tablet:gap-y-4 Laptop:grid-cols-4 Laptop:gap-x-6 Laptop:gap-y-5">
           {movies.map((movie) => (
             <button

@@ -1,7 +1,7 @@
 import Button from "@/components/buttons/Button";
 
 interface BookmarkHeaderProps {
-  movies: Bookmark[] | null;
+  movies: Bookmark[];
   isEditing: boolean;
   onToggle: () => void;
   selectedMovieIds: number[];
@@ -27,9 +27,9 @@ export default function BookmarkHeader({
         ) : (
           <>
             <span className="hidden Tablet:block">
-              찜한 작품 {movies?.length}개
+              찜한 작품 {movies.length}개
             </span>
-            <span className="block Tablet:hidden">총 {movies?.length}개</span>
+            <span className="block Tablet:hidden">총 {movies.length}개</span>
           </>
         )}
       </h2>
@@ -55,7 +55,7 @@ export default function BookmarkHeader({
           </>
         )}
         <Button
-          disabled={!isEditing && !movies?.length}
+          disabled={!isEditing && !movies.length}
           className="Tablet:flex"
           variant={"text"}
           onClick={onToggle}

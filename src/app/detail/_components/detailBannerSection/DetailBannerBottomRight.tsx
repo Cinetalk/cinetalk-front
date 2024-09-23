@@ -26,7 +26,6 @@ export default function DetailBannerBottomRight({
   const { activeCategoryTab, setActiveCategoryTab } = useCategoryTabStore();
   const { device } = useDevice();
   const [clickedTalk, setClickedTalk] = useState(false);
-  const addBookmarkWithId = addBookmark.bind(null, pathname.split("/")[2]);
   useEffect(() => {
     if (activeCategoryTab === "톡" && clickedTalk) {
       smoothScroll("my-talk");
