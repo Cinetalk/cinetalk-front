@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { useState } from "react";
 
 import { useModalContext } from "@/components/modal/ModalContext";
 import SpeechBubble from "@/components/speechBubble/SpeechBubble";
@@ -10,14 +9,12 @@ interface ModalLoginProps {
   onKakaoLogin: () => void;
   onNaverLogin: () => void;
 }
-type LastSocialLogin = null | "kakao" | "naver";
 
 export default function ModalLogin({
   onKakaoLogin,
   onNaverLogin,
 }: ModalLoginProps) {
-  const [lastSocialLogin, setLastSocialLogin] =
-    useState<LastSocialLogin>("kakao");
+  const lastSocialLogin = localStorage.getItem("lastSocialLogin");
   const { onClose } = useModalContext();
 
   return (

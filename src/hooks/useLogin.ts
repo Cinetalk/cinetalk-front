@@ -36,6 +36,7 @@ export default function useLogin(type: "with-nickname" | "without-nickname") {
           const accessToken = res.headers.get("access");
           if (accessToken) {
             tokenManager.setToken(accessToken);
+            localStorage.setItem("lastSocialLogin", data.provider);
             setAccessToken(accessToken);
           }
           setLoggedIn(true);
