@@ -1,11 +1,16 @@
 "use client";
 
-import { ButtonHTMLAttributes } from "react";
+import Image from "next/image";
+import { ButtonHTMLAttributes, useState } from "react";
 
 import Button from "@/components/buttons/Button";
+import LoadingSpinner from "@/components/loadingSpinner/LoadingSpinner";
+import Modal from "@/components/modal/modal";
 import useDevice from "@/hooks/useDevice";
-import { logout } from "@/services/my/actions";
+import { deleteAccount, logout } from "@/services/my/actions";
 import useLoggedInStore from "@/stores/useLoggedIn";
+
+import { ByeSsikongi, SadSsikongi } from "../../../../public/images";
 
 export function LogoutButton() {
   const handleLogout = useLoggedInStore((state) => state.logout);
@@ -77,5 +82,102 @@ export function BookmarkMobileButtons({
         삭제
       </button>
     </div>
+  );
+}
+
+export function DeleteAccountButton({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [isCompleteModalOpen, setIsCompleteModalOpen] = useState(false);
+  const handleLogout = useLoggedInStore((state) => state.logout);
+  const [loading, setLoading] = useState(false);
+  return (
+    <>
+      <button
+        onClick={() => setIsConfirmModalOpen(true)}
+        type="button"
+        className="py-2 text-Gray_Orange hover:underline"
+      >
+        {children}
+      </button>
+      {isConfirmModalOpen && (
+        <Modal
+          isAlertModal={false}
+          isOpen={isConfirmModalOpen}
+          onClose={() => setIsConfirmModalOpen(false)}
+        >
+          <Modal.Img>
+            <Image
+              src={SadSsikongi}
+              alt="SadSsikongi"
+              width={168}
+              height={150}
+            />
+          </Modal.Img>
+          <Modal.TitleWrapper>
+            <Modal.Title>정말 씨네톡을 탈퇴 하시겠어요?</Modal.Title>
+            <Modal.Description>
+              회원님의 톡과 평점은 남지만
+              <br />
+              씨네톡을 더이상 이용할 수 없어요.
+            </Modal.Description>
+          </Modal.TitleWrapper>
+          <Modal.Checkbox>네, 전부 삭제하고 탈퇴할래요</Modal.Checkbox>
+          <Modal.CancelButton>취소</Modal.CancelButton>
+          <Modal.Button
+            onClick={async () => {
+              setIsConfirmModalOpen(false);
+              setLoading(true);
+              const result = await deleteAccount();
+              setLoading(false);
+              if (result) setIsCompleteModalOpen(true);
+            }}
+          >
+            탈퇴하기
+          </Modal.Button>
+        </Modal>
+      )}
+      {isCompleteModalOpen && (
+        <Modal
+          isAlertModal={false}
+          isOpen={isCompleteModalOpen}
+          onClose={() => setIsConfirmModalOpen(false)}
+        >
+          <Modal.Img>
+            <Image
+              src={ByeSsikongi}
+              alt="ByeSsikongi"
+              width={139}
+              height={150}
+            />
+          </Modal.Img>
+          <Modal.TitleWrapper>
+            <Modal.Title>탈퇴가 완료되었어요.</Modal.Title>
+            <Modal.Description>
+              다음에 기회가 되면 또 만나요 우리!
+            </Modal.Description>
+          </Modal.TitleWrapper>
+          <Modal.Button
+            onClick={() => {
+              setIsCompleteModalOpen(false);
+              handleLogout();
+              logout();
+            }}
+          >
+            홈으로 돌아가기
+          </Modal.Button>
+        </Modal>
+      )}
+      {loading && (
+        <div className="fixed left-0 top-0 z-50 h-screen w-screen bg-black/40 backdrop-blur-[3px]">
+          <div className="fixed left-1/2 top-1/2 z-[51] -translate-x-1/2 -translate-y-1/2">
+            <LoadingSpinner size="3xl" color="primary" />
+          </div>
+        </div>
+      )}
+    </>
   );
 }

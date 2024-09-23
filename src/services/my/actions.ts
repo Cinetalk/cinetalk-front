@@ -88,3 +88,16 @@ export const deleteBookmark = async (list: number[]) => {
   if (data.state) revalidatePath("/my");
   return data.state;
 };
+
+export const deleteAccount = async () => {
+  const accessToken = cookies().get(tokenKey)?.value;
+  if (!accessToken) throw new Error("unauthorized error");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/my/UserDelete`, {
+    headers: {
+      access: accessToken,
+    },
+    method: "DELETE",
+  });
+  const data = (await res.json()) as { state: boolean };
+  return data.state;
+};

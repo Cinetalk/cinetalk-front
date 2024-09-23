@@ -1,3 +1,3 @@
-export default function ModalImg() {
-  return <div className="h-[150px] w-[280px] bg-[#a4a4a4]" />;
+export default function ModalImg({ children }: { children: React.ReactNode }) {
+  return <div className="">{children}</div>;
 }
