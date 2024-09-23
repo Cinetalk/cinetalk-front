@@ -45,6 +45,10 @@ const styles = cva<{
         className: "flex flex-col gap-[9px]",
       },
       {
+        type: ["icon"],
+        className: "min-w-[140px]",
+      },
+      {
         type: ["text", "icon"],
         isMobile: "active",
         className: "p-1",

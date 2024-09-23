@@ -17,7 +17,7 @@ export default function HeaderDropdown({
 }) {
   const hasScrolledPast = useScrollStore((state) => state.hasScrolledPast);
   const dropdownMenu = [
-    { icon: User, content: "마이 페이지" },
+    { icon: User, content: "마이페이지" },
     { icon: LogOut, content: "로그 아웃" },
   ];
   const pathname = usePathname();
@@ -53,8 +53,8 @@ export default function HeaderDropdown({
             isFocused={m.content === "전체"}
           >
             <div className="flex items-center gap-2">
-              <Image src={m.icon} alt={m.content} className="mr-2 h-6 w-6" />
-              <p className="Text-m-Regular">{m.content}</p>
+              <Image src={m.icon} alt={m.content} className="h-6 w-6" />
+              <p className="min-w-fit Text-m-Regular">{m.content}</p>
             </div>
           </Dropdown.Item>
         ))}
