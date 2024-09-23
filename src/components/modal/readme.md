@@ -30,7 +30,9 @@
     onKakaoLogin={() => console.log("d")}
     onNaverLogin={() => console.log("d")}
   />
-  <Modal.Img />
+  <Modal.Img>
+    <Image src={SadSsikongi} alt="SadSsikongi" width={168} height={150} />
+  </Modal.Img>
   <Modal.Checkbox>네, 전부 삭제하고 탈퇴할래요</Modal.Checkbox>
   <Modal.CancelButton>취소</Modal.CancelButton>
   <Modal.Button
