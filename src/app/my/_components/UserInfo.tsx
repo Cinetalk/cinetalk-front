@@ -12,7 +12,6 @@ export default async function UserInfo() {
     getActivityCount(),
     getBadges(),
   ]);
-
   const activeBadges = badges.filter((badge) => badge.use);
   return (
     <section className="mb-9 flex w-full flex-col items-center gap-7 px-5 Tablet:mb-0 Tablet:gap-[52px] Tablet:px-0">
