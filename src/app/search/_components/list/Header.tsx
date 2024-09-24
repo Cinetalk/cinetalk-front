@@ -1,36 +1,37 @@
+import clsx from "clsx";
 import Image from "next/image";
 
+import useQueryString from "@/app/search/_hooks/useQueryString";
 import Button from "@/components/buttons/Button";
 
-import { ChevronRightGrayMd } from "../../../../public/icons";
+import { ChevronRightGrayMd } from "../../../../../public/icons";
 
 interface SearchTitleProps {
-  category: string;
+  category: "영화" | "톡";
   length?: number;
-  handleTabChange: (category: string) => void;
-  isActiveTabIndex: number;
 }
 
-export default function SearchTitle({
+export default function SearchListHeader({
   category,
   length,
-  handleTabChange,
-  isActiveTabIndex,
 }: SearchTitleProps) {
-  if (isActiveTabIndex) return null;
-
+  const { query, tab } = useQueryString();
   return (
-    <div className="flex items-center justify-between">
+    <div
+      className={clsx(
+        `flex items-center justify-between ${tab === category && "hidden"}`,
+      )}
+    >
       <div className="flex Mobile:h-[37px] Tablet:h-[40px]">
         <h2 className="flex gap-2 Text-l-Bold">
           <strong>{category}</strong>
           <span className="inline-block ">{length}</span>
         </h2>
       </div>
-      {!isActiveTabIndex && length ? (
+      {tab === "전체" && length ? (
         <div className="">
           <Button
-            onClick={() => handleTabChange(`${category} ${length}`)}
+            href={{ query: { tab: category, query } }}
             variant={"textIconR"}
             className="h-fit text-Gray_Orange Text-s-Medium"
           >

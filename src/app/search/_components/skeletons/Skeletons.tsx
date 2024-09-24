@@ -27,7 +27,7 @@ function ItemHeaderSkeleton() {
   return <div className="h-6 w-[238px] animate-pulse rounded bg-D2_Gray" />;
 }
 
-export function SearchListContainerSkeleton() {
+export function SearchContainerSkeleton() {
   return (
     <div className="mx-auto px-5 Tablet:px-6 Laptop:max-w-[1144px] Laptop:px-0 Desktop:max-w-[1560px]">
       <div className="flex flex-col gap-[104px]">

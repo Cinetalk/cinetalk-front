@@ -10,13 +10,8 @@ export class CustomFetch {
     url: string,
     method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" = "GET",
   ) {
-    const accessToken = cookies().get(tokenKey)?.value;
-    if (!accessToken) return null;
     try {
       const res = await fetch(`${baseUrl}${url}`, {
-        headers: {
-          access: accessToken,
-        },
         method,
       });
       return res.json();
@@ -29,9 +24,13 @@ export class CustomFetch {
     url: string,
     method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" = "GET",
     nextOptions?: NextFetchRequestConfig,
+    isGetUser: boolean = false,
   ) {
     const accessToken = cookies().get(tokenKey)?.value;
-    if (!accessToken) throw new Error("unauthorized error");
+    if (!accessToken) {
+      if (!isGetUser) throw new Error("unauthorized error");
+      else return null;
+    }
     try {
       const res = await fetch(`${baseUrl}${url}`, {
         headers: {
@@ -52,7 +51,7 @@ export class CustomFetch {
 
 export const myAPIs = {
   getUser: async (): Promise<MyInfo | null> => {
-    return new CustomFetch().fetch("/my/userInfo");
+    return new CustomFetch().authFetch("/my/userInfo", "GET", {}, true);
   },
 
   getActivityCount: async (): Promise<Record<ActivityCount, number>> => {
