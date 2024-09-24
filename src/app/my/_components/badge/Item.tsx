@@ -39,7 +39,9 @@ export default function BadgeItem({
       <div className="flex flex-col items-center gap-1">
         <p className="Text-s-Bold">{hasEmoji ? badgeName : "???"}</p>
         <div className="flex items-center gap-1">
-          <span className="Text-xs-Regular">{badge.name}</span>
+          <span className={`text-Gray_Orange Text-xs-Regular`}>
+            {badge.name}
+          </span>
           <span
             className={cn(
               {
