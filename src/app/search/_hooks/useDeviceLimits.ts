@@ -4,8 +4,7 @@ type Cetegory = "talk" | "movie";
 
 interface DeviceLimitsProps<T> {
   category: Cetegory;
-  isActiveTabIndex: number;
-  data?: T[];
+  data: T[];
 }
 
 const DEVICE_LIMITS: {
@@ -19,10 +18,9 @@ const DEVICE_LIMITS: {
 
 export default function useDeviceLimits<T>({
   category,
-  isActiveTabIndex,
   data,
-}: DeviceLimitsProps<T>) {
+}: DeviceLimitsProps<T>): T[] {
   const { device } = useDevice();
   const limit = DEVICE_LIMITS[device as Exclude<Device, "">]?.[category];
-  return !isActiveTabIndex ? data?.slice(0, limit) : data;
+  return data.slice(0, limit);
 }

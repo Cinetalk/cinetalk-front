@@ -1,14 +1,15 @@
 "use client";
 import { cva, VariantProps } from "class-variance-authority";
 import Link from "next/link";
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, LinkHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
+import { UrlObject } from "url";
 
 interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof ButtonVariants> {
   children: React.ReactNode;
-  href?: string;
+  href?: UrlObject | string;
 }
 
 const ButtonVariants = cva(`flex justify-center whitespace-nowrap`, {
