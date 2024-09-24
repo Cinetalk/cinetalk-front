@@ -4,6 +4,8 @@ import Link from "next/link";
 
 import { movieLines } from "@/app/not-found";
 
+import { FullLogo } from "../../public/images";
+
 export default function Error() {
   const randomNumber = Math.floor(Math.random() * movieLines.length);
   const movieLine = movieLines[randomNumber];
@@ -11,12 +13,9 @@ export default function Error() {
   return (
     <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-BG">
       <div className="flex w-80 flex-col items-center gap-[64px] Tablet:w-[360px]">
-        <Image
-          src=""
-          alt="로고"
-          className="h-[40px] w-[150px] bg-[#d9d9d9] Tablet:h-[58px] Tablet:w-[218px]"
-        />
-
+        <div className="relative h-8 w-48 Tablet:h-11 Tablet:w-[264px]">
+          <Image src={FullLogo} alt="cinetalk logo" className="" fill />
+        </div>
         <section className="flex flex-col items-center gap-7">
           <p className="text-center text-Primary Text-l-Bold Tablet:Text-xxl-Bold Desktop:Text-xxxl-Bold">
             서버 에러가 발생했어요.

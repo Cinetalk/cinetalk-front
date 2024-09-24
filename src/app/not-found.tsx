@@ -4,6 +4,8 @@ import Link from "next/link";
 import Button from "@/components/buttons/Button";
 import ROUTES from "@/constants/routes";
 
+import { FullLogo } from "../../public/images";
+
 export const movieLines = [
   {
     line: {
@@ -60,12 +62,9 @@ export default async function NotFound() {
   return (
     <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-BG">
       <div className="flex w-80 flex-col items-center gap-[64px] Tablet:w-[360px]">
-        <Image
-          src=""
-          alt="로고"
-          className="h-[40px] w-[150px] bg-[#d9d9d9] Tablet:h-[58px] Tablet:w-[218px]"
-        />
-
+        <div className="relative h-8 w-48 Tablet:h-11 Tablet:w-[264px]">
+          <Image src={FullLogo} alt="cinetalk logo" className="" fill />
+        </div>
         <section className="flex flex-col items-center gap-7">
           <p className="text-center text-Primary Text-l-Bold Tablet:Text-xxl-Bold Desktop:Text-xxxl-Bold">
             404 Error <br /> 어랏! 잘못된 접근이에요.
