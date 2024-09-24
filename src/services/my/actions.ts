@@ -27,13 +27,13 @@ export const verifyNickname = async (nickname: string): Promise<boolean> => {
   );
   return data;
 };
-export const addBookmark = async (movieId: string) => {
-  const data = await new CustomFetch().authFetch(
-    `/bookmark/${movieId}`,
-    "POST",
-  );
-  return data;
-};
+// export const addBookmark = async (movieId: string) => {
+//   const data = await new CustomFetch().authFetch(
+//     `/bookmark/${movieId}`,
+//     "POST",
+//   );
+//   return data;
+// };
 export const deleteBookmark = async (list: number[]) => {
   const queryString = list.map((id) => `BookmarkList=${id}`).join("&");
   const data = (await new CustomFetch().authFetch(

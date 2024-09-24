@@ -1,10 +1,8 @@
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 import useDevice from "@/hooks/useDevice";
 import useSmoothScroll from "@/hooks/useSmoothScroll";
-import { addBookmark } from "@/services/my/actions";
 
 import {
   EditPencilLineMd,
@@ -21,7 +19,6 @@ interface DetailBannerBottomRightProps {
 export default function DetailBannerBottomRight({
   movieDetailData,
 }: DetailBannerBottomRightProps) {
-  const pathname = usePathname();
   const { smoothScroll } = useSmoothScroll();
   const { activeCategoryTab, setActiveCategoryTab } = useCategoryTabStore();
   const { device } = useDevice();
@@ -53,11 +50,7 @@ export default function DetailBannerBottomRight({
             내 평가
           </p>
         </section>
-        {/* <section className="cursor-pointer"> */}
-        <button
-          onClick={() => addBookmark(pathname.split("/")[2])}
-          className="cursor-pointer"
-        >
+        <section className="cursor-pointer">
           <Image
             src={HeartLineLg}
             alt="찜하기"
@@ -71,7 +64,7 @@ export default function DetailBannerBottomRight({
           <p className="text-center text-L_Gray Text-xs-Regular Laptop:text-White Laptop:Text-s-Medium">
             찜 하기
           </p>
-        </button>
+        </section>
         <section onClick={handleClickTalk} className="cursor-pointer">
           <Image
             src={EditPencilLineSm}
