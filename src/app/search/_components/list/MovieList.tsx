@@ -7,6 +7,7 @@ import SearchPlaceholder from "@/app/search/_components/placeholders/SearchPlace
 import useDeviceLimits from "@/app/search/_hooks/useDeviceLimits";
 import ROUTES from "@/constants/routes";
 import useSearchTabStore from "@/stores/useTabStore";
+import { getTmdbPosterUrl } from "@/utils/tmdb";
 
 interface SearchMovieListProps {
   movies: MovieResult[];
@@ -47,7 +48,7 @@ export default function SearchMovieList({
               >
                 <Image
                   className="object-cover group-hover:opacity-70 group-hover:blur-[3px]"
-                  src={`${movie?.poster_path ? `https://image.tmdb.org/t/p/w342/${movie.poster_path}` : "/images/ssikongi/PNG/NoImage.png"}`}
+                  src={`${movie.poster_path ? getTmdbPosterUrl("w500", movie.poster_path) : "/images/ssikongi/PNG/NoImage.png"}`}
                   alt={`${movie.title} 포스터`}
                   fill
                 />

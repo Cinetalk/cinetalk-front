@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import Placeholder from "@/app/my/_components/Placeholder";
 import ROUTES from "@/constants/routes";
+import { getTmdbPosterUrl } from "@/utils/tmdb";
 
 import { StarFillMd } from "../../../../public/icons";
 import { NoImageSsikongi } from "../../../../public/images";
@@ -24,6 +25,7 @@ export default function HistoryLog({ log, activeFilter }: HistoryLogProps) {
     },
     {},
   );
+  console.log(log);
 
   if (!log.length) return <Placeholder type="log" />;
   return (
@@ -69,7 +71,7 @@ export default function HistoryLog({ log, activeFilter }: HistoryLogProps) {
                         alt={`${movie.movienm} 영화 포스터`}
                         src={
                           movie.poster_path
-                            ? `https://image.tmdb.org/t/p/w342/${movie.poster_path}`
+                            ? getTmdbPosterUrl("w342", movie.poster_path)
                             : NoImageSsikongi
                         }
                       />
