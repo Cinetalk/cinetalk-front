@@ -30,24 +30,23 @@ export default function BadgeItem({
         toggleMovie(badge.id);
       }}
       className={cn(
-        isEditing && "hover:bg-D2_Gray active:bg-D3_Gray",
+        isEditing && hasBadge && "hover:bg-D2_Gray active:bg-D3_Gray",
         `${isSelected ? "badge-gradient" : "bg-Black"} ${isEditing && hasBadge ? "cursor-pointer" : "cursor-default"} flex flex-col items-center justify-center gap-3 rounded-xl py-3 Tablet:gap-4 Tablet:py-7`,
       )}
     >
-      <div
-        className={cn(
-          !hasBadge && "blur-[4px]",
-          `relative h-11 w-11 Tablet:h-12 Tablet:w-12`,
-        )}
-      >
+      <div className="relative h-[60px] w-[60px]">
         {!hasBadge && (
-          <div className="relative z-10 h-full w-full bg-[#1e1e1e]/80" />
+          <div className="absolute z-[1] h-full w-full bg-[#1e1e1e]/80 backdrop-blur-sm" />
         )}
-        <Image
-          fill
-          alt={`${badgeName} 뱃지 이미지`}
-          src={getEmoji(badgeName)}
-        />
+        <div className="flex h-full w-full items-center justify-center">
+          <div className="relative h-11 w-11 Tablet:h-12 Tablet:w-12">
+            <Image
+              fill
+              alt={`${badgeName} 뱃지 이미지`}
+              src={getEmoji(badgeName)}
+            />
+          </div>
+        </div>
       </div>
       <div className="flex flex-col items-center gap-1">
         <p className="Text-s-Bold">{hasBadge ? badgeName : "???"}</p>

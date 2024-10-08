@@ -1,6 +1,6 @@
 export function ModalTitleWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col items-center gap-2 Tablet:min-w-[360px]">
+    <div className="flex min-h-12 flex-col items-center justify-center gap-2 Tablet:min-h-[66px] Tablet:min-w-[360px] ">
       {children}
     </div>
   );

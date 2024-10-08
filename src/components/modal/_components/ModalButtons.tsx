@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import Button from "@/components/buttons/Button";
 import { useModalContext } from "@/components/modal/ModalContext";
 
 import { SquareCheckFillMd, SquareCheckMd } from "../../../../public/icons";
@@ -13,25 +14,31 @@ interface ModalButtonProps {
 export function ModalButton({ children, onClick, disabled }: ModalButtonProps) {
   const { isChecked, hasCheckbox } = useModalContext();
   return (
-    <button
+    <Button
+      variant={"orange"}
+      size={"full"}
       onClick={onClick}
       disabled={hasCheckbox ? !isChecked : disabled}
-      className="w-full rounded-xl bg-Primary px-5 py-3 text-white Text-s-Medium hover:bg-Shade_1 active:bg-Shade_3 disabled:bg-D2_Gray disabled:text-Gray Tablet:Text-m-Medium"
     >
       {children}
-    </button>
+    </Button>
   );
 }
 
-export function ModalCancelButton({ children }: { children: React.ReactNode }) {
+export function ModalCancelButton({
+  children,
+  disabled,
+}: Omit<ModalButtonProps, "onClick">) {
   const { onClose } = useModalContext();
   return (
-    <button
+    <Button
+      size={"full"}
+      variant={"line"}
+      disabled={disabled}
       onClick={onClose}
-      className="w-full whitespace-nowrap rounded-xl border border-Gray bg-none px-5 py-3 text-white Text-s-Medium hover:border-Silver active:bg-D1_Gray Tablet:whitespace-normal Tablet:Text-m-Medium"
     >
       {children}
-    </button>
+    </Button>
   );
 }
 

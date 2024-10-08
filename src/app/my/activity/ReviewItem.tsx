@@ -12,8 +12,6 @@ import {
   ChatLineGrayOrangeSm,
   MoreHorizontal,
   StarFillSm,
-  StarHalfSm,
-  StarSm,
   ThumbsUpLineSm,
 } from "../../../../public/icons";
 
@@ -28,31 +26,28 @@ export default function ReviewItem({
   setActiveTab,
   reviewsLength,
 }: ReviewItemProps) {
+  const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
 
-  const printStar = (star: number) => {
-    return Array(5)
-      .fill(0)
-      .map((_, i) => {
-        const remaining = star - i;
-        if (remaining >= 1) {
-          return <Image key={i} src={StarFillSm} alt="full star" />;
-        } else if (remaining >= 0.5) {
-          return <Image key={i} src={StarHalfSm} alt="half star" />;
-        } else {
-          return <Image key={i} src={StarSm} alt="empty star" />;
-        }
-      });
+  const handleDeleteReview = async () => {
+    setLoading(true);
+    const result = await deleteReview(review.review_id);
+    setLoading(false);
+    if (result.state) setActiveTab(`톡 ${reviewsLength - 1}`);
+    setIsModalOpen(false);
   };
 
   return (
-    <div className="flex flex-col justify-between gap-2 rounded-xl bg-D1_Gray px-5 pb-5 pt-3 Laptop:gap-4 Laptop:px-7 Laptop:pb-6 Laptop:pt-4">
+    <div className="flex flex-col justify-between gap-2 rounded-xl bg-D1_Gray px-5 pb-4 pt-2 Laptop:gap-4 Laptop:px-7 Laptop:pb-6 Laptop:pt-4">
       <div className="">
-        <div className="flex h-10 items-center justify-between Laptop:mb-2">
+        <div className="flex h-10 items-center justify-between gap-2 Laptop:mb-2">
           <div className="flex items-center gap-2">
+            <div className="flex items-center Text-s-Bold">
+              <Image src={StarFillSm} alt="별점" />
+              {Number.isInteger(review.star) ? `${review.star}.0` : review.star}
+            </div>
             <span className="line-clamp-1 Text-m-Medium">{review.movienm}</span>
-            <div className="flex items-center">{printStar(review.star)}</div>
           </div>
           <div>
             <Dropdown>
@@ -101,16 +96,12 @@ export default function ReviewItem({
       {isModalOpen && (
         <Modal isAlertModal onClose={() => setIsModalOpen(false)}>
           <Modal.TitleWrapper>
-            <Modal.Title>정말 삭제하시겠어요?</Modal.Title>
+            <Modal.Title>
+              {loading ? "삭제 중..." : "정말 삭제하시겠어요?"}
+            </Modal.Title>
           </Modal.TitleWrapper>
-          <Modal.CancelButton>아니요</Modal.CancelButton>
-          <Modal.Button
-            onClick={async () => {
-              const result = await deleteReview(review.review_id);
-              if (result.state) setActiveTab(`톡 ${reviewsLength - 1}`);
-              setIsModalOpen(false);
-            }}
-          >
+          <Modal.CancelButton disabled={loading}>아니요</Modal.CancelButton>
+          <Modal.Button disabled={loading} onClick={handleDeleteReview}>
             네
           </Modal.Button>
         </Modal>

@@ -82,6 +82,9 @@ input::-webkit-search-results-decoration {
   .inner-gray-orange {
     box-shadow: inset 0 0 0 1px theme(colors.Gray_Orange);
   }
+  .inner-d3-gray {
+    box-shadow: inset 0 0 0 1px theme(colors.D3_Gray);
+  }
   .inner-none {
     box-shadow: none;
   }

@@ -127,6 +127,7 @@ const config: Config = {
         ".inner-silver": {},
         ".inner-gray-orange": {},
         ".inner-none": {},
+        ".inner-d3-gray": {},
       });
     },
   ],
