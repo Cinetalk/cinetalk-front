@@ -12,8 +12,8 @@ export default function SideMenu() {
     setMovieToggle((prev) => !prev);
   };
   return (
-    <nav className="h-screen w-44 border-r border-D2_Gray">
-      <ul className="flex flex-col gap-5 p-5 transition-all">
+    <nav className="fixed h-screen border-r border-D2_Gray">
+      <ul className="flex flex-col gap-5 p-5 text-Black transition-all">
         <li>
           <Link href="/admin">홈</Link>
         </li>
@@ -23,7 +23,8 @@ export default function SideMenu() {
         <li>
           <Link href="/admin/feedback">피드백</Link>
         </li>
-        {/* 
+      </ul>
+      {/* 
         <li>
           <button onClick={HandleUserToggle} className="text-lg">
             회원관리
@@ -68,7 +69,6 @@ export default function SideMenu() {
             </ul>
           </div>
         </li> */}
-      </ul>
     </nav>
   );
 }

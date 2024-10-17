@@ -13,7 +13,7 @@ export default function AdminMain() {
     KeywordCount: Users[] | undefined;
   };
   return (
-    <main className="flex min-h-screen w-full flex-col  gap-5 p-24">
+    <div className="flex min-h-screen w-full flex-col  gap-5 p-24">
       <div className="">
         <h1 className="text-gray-80 text-4xl font-extrabold">통계</h1>
       </div>
@@ -24,6 +24,6 @@ export default function AdminMain() {
           KeywordCount={KeywordCount}
         />
       </div>
-    </main>
+    </div>
   );
 }

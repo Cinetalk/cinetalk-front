@@ -40,9 +40,6 @@ export default function Header({ children }: { children: React.ReactNode }) {
 
   const { myPageHeaderText } = getMyPageHeaderText(pathname);
 
-  if (pathname.includes("/admin")) {
-    return null;
-  }
   return (
     <header
       className={`${pathname} sticky top-0 z-10 h-[64px] Laptop:h-20 ${pathname.includes(ROUTES.DETAIL) ? (hasScrolledPast ? "bg-BG" : "bg-transparent") : "bg-BG"} ${pathname.includes(ROUTES.MY.default) && "border-D2_Gray Tablet:border-b"} `}
