@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { CaretDownMd, ChevronDown, Filter } from "@/../public/icons";
+import { ChevronDownGrayOrangeMd } from "@/../public/icons";
 import Button from "@/components/buttons/Button";
 import Dropdown from "@/components/dropdown/dropdown";
 import { movieAPIs } from "@/services/movie/movieAPIs";
@@ -85,7 +85,7 @@ export default function MoiveTopRank({ data }: MoiveTopRankType) {
                 <Button type="button" variant={"textIconR"}>
                   {MovieGenreType[filter].name}
                   <Image
-                    src={CaretDownMd}
+                    src={ChevronDownGrayOrangeMd}
                     alt="더보기"
                     className="cursor-pointer"
                   />
