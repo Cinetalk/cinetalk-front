@@ -77,7 +77,7 @@ export default function SlimilarPost({ selectedReviewer }: ReviewUsersProps) {
           ))}
         </div>
       </div>
-      <div className="relative -mr-5 Laptop:mr-0">
+      <div className="group/swiper relative -mr-5 Laptop:mr-0">
         <Swiper
           onSlideChange={(swiper) => {
             setIsEnd(swiper.isEnd);
@@ -167,7 +167,7 @@ export default function SlimilarPost({ selectedReviewer }: ReviewUsersProps) {
         </Swiper>
         {!isBeginning && (
           <Button
-            className="absolute -left-[24px] top-1/2 z-[9] hidden -translate-y-1/2 Laptop:block"
+            className=" absolute -left-[24px] top-1/2 z-[9] hidden -translate-y-1/2 group-hover/swiper:Laptop:block"
             variant={"arrow1"}
             onClick={() => swiperRef.current?.slidePrev()}
           >
@@ -176,7 +176,7 @@ export default function SlimilarPost({ selectedReviewer }: ReviewUsersProps) {
         )}
         {!isEnd && (
           <Button
-            className="absolute -right-[24px] top-1/2 z-[9] hidden -translate-y-1/2 Laptop:block"
+            className="absolute -right-[24px] top-1/2 z-[9] hidden -translate-y-1/2 group-hover/swiper:Laptop:block"
             variant={"arrow1"}
             onClick={() => swiperRef.current?.slideNext()}
           >

@@ -100,3 +100,4 @@ export { default as ThumbsUpFillLSilverSm } from "./interaction/thumbs/thumbs_up
 export { default as ChatFillGraySm } from "./chat/chat_fill_gray_sm.svg";
 export { default as EditPencilLineSilverFill } from "./interaction/edit_pencil/edit_pencil_line_silver_fill.svg";
 export { default as ChevronRightSilverMd } from "./arrow/chevron_right_silver_md.svg";
+export { default as ChevronDownGrayOrangeMd } from "./arrow/caret_down_gray_orange_md.svg";
