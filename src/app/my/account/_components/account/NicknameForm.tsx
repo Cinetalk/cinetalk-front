@@ -9,7 +9,6 @@ import { NicknameChangeButton } from "@/app/my/_components/buttons";
 import { AccountFormLabel } from "@/app/my/_components/Labels";
 import useDebounce from "@/hooks/useDebounce";
 import { changeUserInfo, verifyNickname } from "@/services/my/actions";
-import useMyInfoStore from "@/stores/useMyInfoStore";
 import { nicknameRegex } from "@/utils/regex";
 
 const nicknameSchema = z.object({
@@ -40,7 +39,6 @@ export default function AccountNicknameForm({
   const nickname = watch("nickname");
   const [isEditing, setIsEditing] = useState(false);
   const debouncedNickname = useDebounce(nickname, 500);
-  const setMyInfo = useMyInfoStore((state) => state.setMyInfo);
 
   const clearEditing = () => {
     reset();
@@ -57,7 +55,6 @@ export default function AccountNicknameForm({
     const result = await changeUserInfo(nickname, "nickname");
     setIsLoading(false);
     if (result.state) {
-      setMyInfo({ nickname });
       setIsEditing(false);
     } else {
       setError("nickname", { message: "이미 사용 중인 닉네임이에요." });

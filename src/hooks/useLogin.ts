@@ -5,7 +5,6 @@ import { revalidateUser, setAccessToken } from "@/services/auth/actions";
 import { authAPIS } from "@/services/auth/authAPIs";
 import { tokenManager } from "@/services/auth/tokenManager";
 import useLoggedInStore from "@/stores/useLoggedIn";
-import useMyInfoStore from "@/stores/useMyInfoStore";
 
 export default function useLogin(type: "with-nickname" | "without-nickname") {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,7 +17,6 @@ export default function useLogin(type: "with-nickname" | "without-nickname") {
     gender: "",
   });
   const { setLoggedIn } = useLoggedInStore();
-  const { setMyInfo } = useMyInfoStore();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -54,14 +52,13 @@ export default function useLogin(type: "with-nickname" | "without-nickname") {
               birthday: data.birthday,
               gender: data.gender,
             });
-            setMyInfo(data);
             setIsLoading(false);
           }
         }
       }
     };
     fetchLogin();
-  }, [authToken, router, prevPage, type, setLoggedIn, setMyInfo]);
+  }, [authToken, router, prevPage, type, setLoggedIn]);
 
   return { isLoading, userInfo };
 }

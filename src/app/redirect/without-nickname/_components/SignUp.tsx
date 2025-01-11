@@ -6,7 +6,6 @@ import Button from "@/components/buttons/Button";
 import ROUTES from "@/constants/routes";
 import { authAPIS } from "@/services/auth/authAPIs";
 import { revalidateMyPage } from "@/services/my/actions";
-import useMyInfoStore from "@/stores/useMyInfoStore";
 
 import { FullLogo } from "../../../../../public/images";
 import SignUpBirth from "./SignUpBirth";
@@ -36,7 +35,6 @@ export default function SignUp({ userInfo }: SignUpProps) {
     day: day,
   });
   const [gender, setGender] = useState(userInfo.gender);
-  const { setMyInfo } = useMyInfoStore();
   const [nickError, setNickError] = useState(false);
   const [birthError, setBirthError] = useState(false);
 
@@ -52,7 +50,6 @@ export default function SignUp({ userInfo }: SignUpProps) {
           router.push(`${ROUTES.SIGN_UP_COMPLETE}?nickname=${nickname}`);
         }, 500);
       }
-      setMyInfo({ nickname: nickname, birthday: birthday, gender: gender });
       revalidateMyPage("user");
     } catch (error) {
       alert(error);
